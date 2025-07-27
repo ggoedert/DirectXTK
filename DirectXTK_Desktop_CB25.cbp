@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="DirectXTK" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="Bin/Debug/bin/DirectXTK" prefix_auto="0" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="Bin/Debug/obj/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="Bin/Release/bin/DirectXTK" prefix_auto="0" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="Bin/Release/obj/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-mtune=generic -msse2" />
+			<Add option="-D_WIN32_WINNT=0x0601" />
+			<Add option="-DUSING_XAUDIO2_REDIST" />
+			<Add directory="../DirectXMath/Inc" />
+			<Add directory="../microsoft.xaudio2.redist/build/native/include" />
+			<Add directory="Inc" />
+			<Add directory="Src" />
+			<Add directory="Src/Shaders/Compiled" />
+		</Compiler>
+		<ExtraCommands>
+			<Add before="cmd /C DirectXTK_Desktop_CB25_PreBuild.cmd" />
+		</ExtraCommands>
+		<Unit filename="Audio/AudioEngine.cpp" />
+		<Unit filename="Audio/DynamicSoundEffectInstance.cpp" />
+		<Unit filename="Audio/SoundCommon.cpp" />
+		<Unit filename="Audio/SoundCommon.h" />
+		<Unit filename="Audio/SoundEffect.cpp" />
+		<Unit filename="Audio/SoundEffectInstance.cpp" />
+		<Unit filename="Audio/SoundStreamInstance.cpp" />
+		<Unit filename="Audio/WAVFileReader.cpp" />
+		<Unit filename="Audio/WAVFileReader.h" />
+		<Unit filename="Audio/WaveBank.cpp" />
+		<Unit filename="Audio/WaveBankReader.cpp" />
+		<Unit filename="Audio/WaveBankReader.h" />
+		<Unit filename="Inc/Audio.h" />
+		<Unit filename="Inc/BufferHelpers.h" />
+		<Unit filename="Inc/CommonStates.h" />
+		<Unit filename="Inc/DDSTextureLoader.h" />
+		<Unit filename="Inc/DirectXHelpers.h" />
+		<Unit filename="Inc/Effects.h" />
+		<Unit filename="Inc/GamePad.h" />
+		<Unit filename="Inc/GeometricPrimitive.h" />
+		<Unit filename="Inc/GraphicsMemory.h" />
+		<Unit filename="Inc/Keyboard.h" />
+		<Unit filename="Inc/Model.h" />
+		<Unit filename="Inc/Mouse.h" />
+		<Unit filename="Inc/PostProcess.h" />
+		<Unit filename="Inc/PrimitiveBatch.h" />
+		<Unit filename="Inc/ScreenGrab.h" />
+		<Unit filename="Inc/SimpleMath.h" />
+		<Unit filename="Inc/SimpleMath.inl" />
+		<Unit filename="Inc/SpriteBatch.h" />
+		<Unit filename="Inc/SpriteFont.h" />
+		<Unit filename="Inc/VertexTypes.h" />
+		<Unit filename="Inc/WICTextureLoader.h" />
+		<Unit filename="Src/AlignedNew.h" />
+		<Unit filename="Src/AlphaTestEffect.cpp" />
+		<Unit filename="Src/BasicEffect.cpp" />
+		<Unit filename="Src/BasicPostProcess.cpp" />
+		<Unit filename="Src/Bezier.h" />
+		<Unit filename="Src/BinaryReader.cpp" />
+		<Unit filename="Src/BinaryReader.h" />
+		<Unit filename="Src/BufferHelpers.cpp" />
+		<Unit filename="Src/CMO.h" />
+		<Unit filename="Src/CommonStates.cpp" />
+		<Unit filename="Src/DDS.h" />
+		<Unit filename="Src/DDSTextureLoader.cpp" />
+		<Unit filename="Src/DGSLEffect.cpp" />
+		<Unit filename="Src/DGSLEffectFactory.cpp" />
+		<Unit filename="Src/DebugEffect.cpp" />
+		<Unit filename="Src/DemandCreate.h" />
+		<Unit filename="Src/DirectXHelpers.cpp" />
+		<Unit filename="Src/DualPostProcess.cpp" />
+		<Unit filename="Src/DualTextureEffect.cpp" />
+		<Unit filename="Src/EffectCommon.cpp" />
+		<Unit filename="Src/EffectCommon.h" />
+		<Unit filename="Src/EffectFactory.cpp" />
+		<Unit filename="Src/EnvironmentMapEffect.cpp" />
+		<Unit filename="Src/GamePad.cpp" />
+		<Unit filename="Src/GeometricPrimitive.cpp" />
+		<Unit filename="Src/Geometry.cpp" />
+		<Unit filename="Src/Geometry.h" />
+		<Unit filename="Src/GraphicsMemory.cpp" />
+		<Unit filename="Src/Keyboard.cpp" />
+		<Unit filename="Src/LoaderHelpers.h" />
+		<Unit filename="Src/Model.cpp" />
+		<Unit filename="Src/ModelLoadCMO.cpp" />
+		<Unit filename="Src/ModelLoadSDKMESH.cpp" />
+		<Unit filename="Src/ModelLoadVBO.cpp" />
+		<Unit filename="Src/Mouse.cpp" />
+		<Unit filename="Src/NormalMapEffect.cpp" />
+		<Unit filename="Src/PBREffect.cpp" />
+		<Unit filename="Src/PBREffectFactory.cpp" />
+		<Unit filename="Src/PlatformHelpers.h" />
+		<Unit filename="Src/PrimitiveBatch.cpp" />
+		<Unit filename="Src/SDKMesh.h" />
+		<Unit filename="Src/ScreenGrab.cpp" />
+		<Unit filename="Src/SharedResourcePool.h" />
+		<Unit filename="Src/SimpleMath.cpp" />
+		<Unit filename="Src/SkinnedEffect.cpp" />
+		<Unit filename="Src/SpriteBatch.cpp" />
+		<Unit filename="Src/SpriteFont.cpp" />
+		<Unit filename="Src/ToneMapPostProcess.cpp" />
+		<Unit filename="Src/VertexTypes.cpp" />
+		<Unit filename="Src/WICTextureLoader.cpp" />
+		<Unit filename="Src/pch.cpp" />
+		<Unit filename="Src/pch.h" />
+		<Unit filename="Src/vbo.h" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

@@ -525,6 +525,7 @@ HRESULT WaveBankReader::Impl::Open(const wchar_t* szFileName) noexcept(false)
         return HRESULT_FROM_WIN32(GetLastError());
     }
 
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
     CREATEFILE2_EXTENDED_PARAMETERS params = { sizeof(CREATEFILE2_EXTENDED_PARAMETERS), 0, 0, 0, {}, nullptr };
     params.dwFileAttributes = FILE_ATTRIBUTE_NORMAL;
     params.dwFileFlags = FILE_FLAG_OVERLAPPED | FILE_FLAG_SEQUENTIAL_SCAN;
@@ -532,6 +533,15 @@ HRESULT WaveBankReader::Impl::Open(const wchar_t* szFileName) noexcept(false)
         szFileName,
         GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING,
         &params)));
+#else
+    ScopedHandle hFile(safe_handle(CreateFileW(
+        szFileName,
+        GENERIC_READ, FILE_SHARE_READ,
+        nullptr,
+        OPEN_EXISTING, FILE_FLAG_OVERLAPPED | FILE_FLAG_SEQUENTIAL_SCAN,
+        nullptr)));
+#endif
+
     if (!hFile)
     {
         return HRESULT_FROM_WIN32(GetLastError());
@@ -767,13 +777,25 @@ HRESULT WaveBankReader::Impl::Open(const wchar_t* szFileName) noexcept(false)
         // If streaming, reopen without buffering
         hFile.reset();
 
+    #if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
         CREATEFILE2_EXTENDED_PARAMETERS params2 = { sizeof(CREATEFILE2_EXTENDED_PARAMETERS), 0, 0, 0, {}, nullptr };
         params2.dwFileAttributes = FILE_ATTRIBUTE_NORMAL;
         params2.dwFileFlags = FILE_FLAG_OVERLAPPED | FILE_FLAG_NO_BUFFERING;
-        m_async = CreateFile2(
-            szFileName,
-            GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING,
+        m_async = CreateFile2(szFileName,
+            GENERIC_READ,
+            FILE_SHARE_READ,
+            OPEN_EXISTING,
             &params2);
+    #else
+        m_async = CreateFileW(szFileName,
+            GENERIC_READ,
+            FILE_SHARE_READ,
+            nullptr,
+            OPEN_EXISTING,
+            FILE_FLAG_OVERLAPPED | FILE_FLAG_NO_BUFFERING,
+            nullptr);
+    #endif
+
         if (m_async == INVALID_HANDLE_VALUE)
         {
             return HRESULT_FROM_WIN32(GetLastError());

@@ -30,3 +30,8 @@ packages
 /out
 /CMakeUserPresets.json
 /build/vcpkg_installed
+# Code::Blocks 25
+*.depend
+*.layout
+*.cbp.save
+*.layout.save

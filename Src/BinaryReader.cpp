@@ -54,26 +54,40 @@ HRESULT BinaryReader::ReadEntireFile(
     *dataSize = 0;
 
     // Open the file.
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
     ScopedHandle hFile(safe_handle(CreateFile2(
         fileName,
         GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING,
         nullptr)));
+#else
+    ScopedHandle hFile(safe_handle(CreateFileW(
+        fileName,
+        GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL,
+        nullptr)));
+#endif
+
     if (!hFile)
         return HRESULT_FROM_WIN32(GetLastError());
 
     // Get the file size.
+    LARGE_INTEGER fileSize = { 0 };
+#if (_WIN32_WINNT >= _WIN32_WINNT_VISTA)
     FILE_STANDARD_INFO fileInfo;
     if (!GetFileInformationByHandleEx(hFile.get(), FileStandardInfo, &fileInfo, sizeof(fileInfo)))
     {
         return HRESULT_FROM_WIN32(GetLastError());
     }
+    fileSize = fileInfo.EndOfFile;
+#else
+    GetFileSizeEx(hFile.get(), &fileSize);
+#endif
 
     // File is too big for 32-bit allocation, so reject read.
-    if (fileInfo.EndOfFile.HighPart > 0)
+    if (fileSize.HighPart > 0)
         return E_FAIL;
 
     // Create enough space for the file data.
-    data.reset(new uint8_t[fileInfo.EndOfFile.LowPart]);
+    data.reset(new uint8_t[fileSize.LowPart]);
 
     if (!data)
         return E_OUTOFMEMORY;
@@ -81,12 +95,12 @@ HRESULT BinaryReader::ReadEntireFile(
     // Read the data in.
     DWORD bytesRead = 0;
 
-    if (!ReadFile(hFile.get(), data.get(), fileInfo.EndOfFile.LowPart, &bytesRead, nullptr))
+    if (!ReadFile(hFile.get(), data.get(), fileSize.LowPart, &bytesRead, nullptr))
     {
         return HRESULT_FROM_WIN32(GetLastError());
     }
 
-    if (bytesRead < fileInfo.EndOfFile.LowPart)
+    if (bytesRead < fileSize.LowPart)
         return E_FAIL;
 
     *dataSize = bytesRead;
